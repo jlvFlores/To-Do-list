@@ -11,7 +11,7 @@ addBtn.addEventListener('click', () => {
     AddRemove.addToList(inputValue.value);
     inputValue.value = '';
     inputValue.focus();
-  };
+  }
 });
 
 const descTextareas = document.querySelectorAll('.desc');

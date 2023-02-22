@@ -13,10 +13,10 @@ const updateIndexes = () => {
   listArray.forEach((element) => {
     element.indexVal = counter2;
     counter2 += 1;
-  })
+  });
   counter2 = 0;
   updateLocalStorage();
-}
+};
 
 export const updateDescription = (index, desc) => {
   listArray[index].description = desc;
@@ -36,9 +36,9 @@ export const renderList = () => {
       <i class="erase fa-solid fa-trash" data-id="${element.indexVal}"></i>   
     </li>
   `);
-  counter += 1;
+    counter += 1;
   });
-}
+};
 
 // REMOVE
 export const removeItem = (id) => {
