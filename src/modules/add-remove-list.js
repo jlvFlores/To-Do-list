@@ -1,8 +1,8 @@
 // VARIABLES
 const listContainer = document.getElementById('list-container');
 let listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
-let counter = 0;
-let counter2 = 0;
+let counter = 1;
+let counter2 = 1;
 
 // UPDATE
 const updateLocalStorage = () => {
@@ -14,7 +14,7 @@ const updateIndexes = () => {
     element.indexVal = counter2;
     counter2 += 1;
   });
-  counter2 = 0;
+  counter2 = 1;
   updateLocalStorage();
 };
 
@@ -26,7 +26,7 @@ export const updateDescription = (index, desc) => {
 // LOAD
 export const renderList = () => {
   listArray.forEach((element) => {
-    listArray[counter].indexVal = counter;
+    listArray[counter - 1].indexVal = counter;
     element.indexVal = counter;
     listContainer.insertAdjacentHTML('beforeend', `
     <li id="${element.indexVal}">
