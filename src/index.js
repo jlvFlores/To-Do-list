@@ -1,6 +1,6 @@
 import './style.css';
 import * as addRemove from './modules/add-remove-list.js';
-import {updateStatus} from'./modules/status.js';
+import { updateStatus } from './modules/status.js';
 
 addRemove.renderList();
 

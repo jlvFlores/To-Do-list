@@ -1,4 +1,4 @@
-import {updateStatus} from'./status.js';
+import { updateStatus } from './status.js';
 
 // VARIABLES
 export let listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
@@ -63,7 +63,7 @@ const addNew = () => {
   `);
 
   const newLI = listContainer.querySelector('li:last-of-type');
-  
+
   const erase = newLI.querySelector('i:last-of-type');
   erase.addEventListener('click', (e) => removeItem(e.target.dataset.id));
 
@@ -84,4 +84,4 @@ export const clearCompleted = () => {
   listArray = listArray.filter((item) => item.completed !== true);
   updateLocalStorage();
   location.reload(true);
-}
+};
