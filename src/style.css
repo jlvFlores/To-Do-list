@@ -37,10 +37,6 @@ li {
   align-items: center;
 }
 
-.erase {
-  display: none;
-}
-
 i,
 .checkbox {
   margin: 0.75rem;
@@ -69,6 +65,10 @@ h2 {
   font-size: 1rem;
   font-weight: 500;
   color: #545862;
+}
+
+.hide {
+  display: none;
 }
 
 .erase,

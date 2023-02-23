@@ -1,37 +1,25 @@
 import './style.css';
+import * as AddRemove from './modules/add-remove-list.js';
 
-const listContainer = document.querySelector('ul');
-const listArray = [
-  {
-    description: 'Useless text',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'Useless text',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'Useless text',
-    completed: false,
-    index: 2,
-  },
-  {
-    description: 'Useless text',
-    completed: false,
-    index: 3,
-  },
-];
+AddRemove.renderList();
 
-// LOAD
-listArray.forEach((element) => {
-  listContainer.insertAdjacentHTML('beforeend', `
-  <li data-li="${element.index}">
-    <input class="checkbox" type="checkbox">
-    <textarea maxlength="255">${element.description}</textarea>
-    <i class="move fa-solid fa-ellipsis-vertical"></i>
-    <i class="erase fa-solid fa-trash" data-id="${element.index}"></i>
-  </li>
-  `);
+// EVENT LISTENERS
+const addBtn = document.getElementById('add-button');
+addBtn.addEventListener('click', () => {
+  const inputValue = document.getElementById('add-input');
+  if (inputValue.value) {
+    AddRemove.addToList(inputValue.value);
+    inputValue.value = '';
+    inputValue.focus();
+  }
+});
+
+const descTextareas = document.querySelectorAll('.desc');
+descTextareas.forEach((textarea) => {
+  textarea.addEventListener('keyup', (e) => AddRemove.updateDescription(e.target.dataset.ta, textarea.value));
+});
+
+const removeBtns = document.querySelectorAll('.erase');
+removeBtns.forEach((button) => {
+  button.addEventListener('click', (e) => AddRemove.removeItem(e.target.dataset.id));
 });
