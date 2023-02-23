@@ -1,11 +1,13 @@
+import {updateStatus} from'./status.js';
+
 // VARIABLES
+export let listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
 const listContainer = document.getElementById('list-container');
-let listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
 let counter = 1;
 let counter2 = 1;
 
 // UPDATE
-const updateLocalStorage = () => {
+export const updateLocalStorage = () => {
   localStorage.setItem('list', JSON.stringify(listArray));
 };
 
@@ -61,14 +63,25 @@ const addNew = () => {
   `);
 
   const newLI = listContainer.querySelector('li:last-of-type');
+  
   const erase = newLI.querySelector('i:last-of-type');
   erase.addEventListener('click', (e) => removeItem(e.target.dataset.id));
+
+  const checkbox = newLI.querySelector('.checkbox');
+  checkbox.addEventListener('change', () => updateStatus(checkbox));
+
   updateIndexes();
 };
 
 export const addToList = (desc) => {
   listArray.push({ description: desc, completed: false, indexVal: counter });
-  counter += 1;
   updateLocalStorage();
   addNew();
+  counter += 1;
 };
+
+export const clearCompleted = () => {
+  listArray = listArray.filter((item) => item.completed !== true);
+  updateLocalStorage();
+  location.reload(true);
+}
