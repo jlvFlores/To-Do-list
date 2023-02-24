@@ -1,0 +1,18 @@
+const listContainer = document.getElementById('list-container');
+
+export const clearList = () => {
+  const listItems = listContainer.querySelectorAll('li');
+  listItems.forEach((element) => {
+    element.remove();
+  });
+};
+
+export const updateCompleted = (checkbox) => {
+  let isChecked = false;
+  if (checkbox.checked) {
+    isChecked = true;
+  } else {
+    isChecked = false;
+  }
+  return isChecked;
+};

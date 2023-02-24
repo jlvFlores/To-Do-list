@@ -1,25 +1,19 @@
 import './style.css';
-import * as AddRemove from './modules/add-remove-list.js';
+import * as addRemove from './modules/add-remove-list.js';
+// import * as interactive from './modules/interactive.js';
 
-AddRemove.renderList();
+addRemove.renderList();
 
 // EVENT LISTENERS
 const addBtn = document.getElementById('add-button');
 addBtn.addEventListener('click', () => {
-  const inputValue = document.getElementById('add-input');
-  if (inputValue.value) {
-    AddRemove.addToList(inputValue.value);
-    inputValue.value = '';
-    inputValue.focus();
+  const input = document.getElementById('add-input');
+  if (input.value) {
+    addRemove.addToList(input.value);
+    input.value = '';
+    input.focus();
   }
 });
 
-const descTextareas = document.querySelectorAll('.desc');
-descTextareas.forEach((textarea) => {
-  textarea.addEventListener('keyup', (e) => AddRemove.updateDescription(e.target.dataset.ta, textarea.value));
-});
-
-const removeBtns = document.querySelectorAll('.erase');
-removeBtns.forEach((button) => {
-  button.addEventListener('click', (e) => AddRemove.removeItem(e.target.dataset.id));
-});
+const clearBtn = document.querySelector('.clear-completed');
+clearBtn.addEventListener('click', () => addRemove.clearCompleted());

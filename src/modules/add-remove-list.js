@@ -1,74 +1,85 @@
+import { clearList, updateCompleted } from './update.js';
+
 // VARIABLES
 const listContainer = document.getElementById('list-container');
 let listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
 let counter = 1;
-let counter2 = 1;
 
-// UPDATE
+// UPDATE LOCAL STORAGE
 const updateLocalStorage = () => {
   localStorage.setItem('list', JSON.stringify(listArray));
 };
 
-const updateIndexes = () => {
+// OBJECT UPDATES
+const updateKeys = () => {
   listArray.forEach((element) => {
-    element.indexVal = counter2;
-    counter2 += 1;
+    element.completed = false;
+    element.indexVal = counter;
+    counter += 1;
   });
-  counter2 = 1;
+  counter = 1;
   updateLocalStorage();
 };
 
-export const updateDescription = (index, desc) => {
+const updateDescription = (index, desc) => {
   listArray[index].description = desc;
   updateLocalStorage();
 };
 
-// LOAD
-export const renderList = () => {
-  listArray.forEach((element) => {
-    listArray[counter - 1].indexVal = counter;
-    element.indexVal = counter;
-    listContainer.insertAdjacentHTML('beforeend', `
-    <li id="${element.indexVal}">
-      <input class="checkbox" type="checkbox">
-      <textarea class="desc" maxlength="255" data-ta="${element.indexVal}">${element.description}</textarea>
-      <i class="move fa-solid fa-ellipsis-vertical"></i>
-      <i class="erase fa-solid fa-trash" data-id="${element.indexVal}"></i>   
-    </li>
-  `);
-    counter += 1;
+// LISTENERS
+const createListeners = () => {
+  const checkboxes = document.querySelectorAll('.checkbox');
+  const descTextareas = document.querySelectorAll('.desc');
+
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.getAttribute('listener') !== true) {
+      checkbox.addEventListener('change', () => {
+        const arrayindex = Number(checkbox.parentElement.id - 1);
+        listArray[arrayindex].completed = updateCompleted(checkbox);
+        updateLocalStorage();
+      });
+    }
+  });
+
+  descTextareas.forEach((textarea) => {
+    if (textarea.getAttribute('listener') !== true) textarea.addEventListener('keyup', (e) => updateDescription(e.target.dataset.ta, textarea.value));
   });
 };
 
-// REMOVE
-export const removeItem = (id) => {
-  const selectedElement = document.getElementById(`${id}`);
-  listContainer.removeChild(selectedElement);
-  listArray = listArray.filter((item) => item.indexVal !== +id);
-  updateIndexes();
+// EXPORTS
+export const renderList = () => {
+  updateKeys();
+  listArray.forEach((element) => {
+    listContainer.insertAdjacentHTML('beforeend', `
+      <li id="${element.indexVal}">
+        <input class="checkbox" type="checkbox">
+        <textarea class="desc" maxlength="255" data-ta="${element.indexVal}">${element.description}</textarea>
+        <i class="move fa-solid fa-ellipsis-vertical"></i>
+        <i class="erase fa-solid fa-trash" data-id="${element.indexVal}"></i>   
+      </li>
+    `);
+  });
+  createListeners();
+  const removeBtns = document.querySelectorAll('.erase');
+  removeBtns.forEach((button) => {
+    if (button.getAttribute('listener') !== true) {
+      button.addEventListener('click', (e) => {
+        clearList();
+        listArray = listArray.filter((item) => item.indexVal !== +e.target.dataset.id);
+        renderList();
+      });
+    }
+  });
 };
 
-// ADD
-const addNew = () => {
-  const newItem = listArray[listArray.length - 1];
-  listContainer.insertAdjacentHTML('beforeend', `
-  <li id="${newItem.indexVal}">
-    <input class="checkbox" type="checkbox">
-    <textarea class="desc" maxlength="255" data-ta="${newItem.indexVal}">${newItem.description}</textarea>
-    <i class="move fa-solid fa-ellipsis-vertical"></i>
-    <i class="erase fa-solid fa-trash" data-id="${newItem.indexVal}"></i>
-  </li>
-  `);
-
-  const newLI = listContainer.querySelector('li:last-of-type');
-  const erase = newLI.querySelector('i:last-of-type');
-  erase.addEventListener('click', (e) => removeItem(e.target.dataset.id));
-  updateIndexes();
+export const clearCompleted = () => {
+  listArray = listArray.filter((item) => item.completed !== true);
+  clearList();
+  renderList();
 };
 
 export const addToList = (desc) => {
-  listArray.push({ description: desc, completed: false, indexVal: counter });
-  counter += 1;
-  updateLocalStorage();
-  addNew();
+  listArray.push({ description: desc, completed: false, indexVal: listArray.length + 1 });
+  clearList();
+  renderList();
 };
