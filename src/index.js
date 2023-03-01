@@ -1,5 +1,5 @@
 import './style.css';
-import {renderList, addToList, clearCompleted} from './modules/add-remove-list.js';
+import { renderList, addToList, clearCompleted } from './modules/add-remove-list.js';
 
 renderList();
 

@@ -10,6 +10,17 @@ const updateLocalStorage = () => {
   localStorage.setItem('list', JSON.stringify(listArray));
 };
 
+// PURE FUNCTIONS
+export const pushListItem = (desc) => {
+  listArray.push({ description: desc, completed: false, indexVal: listArray.length + 1 });
+  return listArray;
+};
+
+export const filterListItem = (id, listArray) => {
+  listArray = listArray.filter((item) => item.indexVal !== id);
+  return listArray;
+};
+
 // OBJECT UPDATES
 const updateKeys = () => {
   listArray.forEach((element) => {
@@ -65,7 +76,7 @@ export const renderList = () => {
     if (button.getAttribute('listener') !== true) {
       button.addEventListener('click', (e) => {
         clearList();
-        listArray = listArray.filter((item) => item.indexVal !== +e.target.dataset.id);
+        filterListItem(+e.target.dataset.id);
         renderList();
       });
     }
@@ -79,7 +90,7 @@ export const clearCompleted = () => {
 };
 
 export const addToList = (desc) => {
-  listArray.push({ description: desc, completed: false, indexVal: listArray.length + 1 });
+  pushListItem(desc);
   clearList();
   renderList();
 };
