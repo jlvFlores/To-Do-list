@@ -8,3 +8,8 @@ export const clearList = () => {
 };
 
 export const updateCompleted = (checkbox) => !checkbox.completed;
+
+export const updateCompletedV2 = (index, array) => {
+  array[index].completed = !array[index].completed;
+  return array;
+} 

@@ -3,6 +3,7 @@
  */
 
 import { renameListItem } from './add-remove-list.js';
+import { updateCompletedV2 } from './update.js';
 
 class localStorageMock {
   constructor() {
@@ -28,14 +29,16 @@ class localStorageMock {
 
 global.localStorage = new localStorageMock;
 
-localStorage.setItem('list', {description: 'hello', completed: false, indexVal: 1 })
-const list = JSON.parse(localStorage.getItem('list'));
-console.log(list)
-
 describe('Testing Crud functions', () => {
   test('edit description test', () => {
-
-    expect(list).toBe({description: 'hello', completed: false, indexVal: 1 });
+    const array = [{ description: 'desc', completed: false, indexVal: 1 }];
+    const changed = [{ description: 'new text', completed: false, indexVal: 1 }];
+    expect(renameListItem(1, 'new text', array)).toStrictEqual(changed);
   });
+  test('Update task status', () => {
+    const array = [{ description: 'desc', completed: false, indexVal: 1 }];
+    const changed = [{ description: 'desc', completed: true, indexVal: 1 }];
+    expect(updateCompletedV2(0, array)).toStrictEqual(changed);
+  })
 
 });

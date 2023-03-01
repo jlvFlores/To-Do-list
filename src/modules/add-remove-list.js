@@ -22,7 +22,7 @@ export const filterListItem = (id, listArray) => {
 };
 
 export const renameListItem = (index, desc, listArray) => {
-  listArray[index].description = desc;
+  listArray[index - 1].description = desc;
   return listArray;
 };
 
