@@ -7,12 +7,4 @@ export const clearList = () => {
   });
 };
 
-export const updateCompleted = (checkbox) => {
-  let isChecked = false;
-  if (checkbox.checked) {
-    isChecked = true;
-  } else {
-    isChecked = false;
-  }
-  return isChecked;
-};
+export const updateCompleted = (checkbox) => !checkbox.completed;
