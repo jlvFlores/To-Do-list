@@ -2,7 +2,7 @@ import { clearList, updateCompleted } from './update.js';
 
 // VARIABLES
 const listContainer = document.getElementById('list-container');
-let listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
+const listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
 let counter = 1;
 
 // UPDATE LOCAL STORAGE
@@ -29,7 +29,7 @@ export const renameListItem = (index, desc, listArray) => {
 export const clearSelected = (listArray) => {
   listArray = listArray.filter((item) => item.completed !== true);
   return listArray;
-}
+};
 
 // OBJECT UPDATES
 const updateKeys = () => {

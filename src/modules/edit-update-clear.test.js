@@ -22,7 +22,7 @@ describe('Testing Crud functions', () => {
       { description: 'desc', completed: true, indexVal: 2 },
     ];
     const changed = [
-      { description: 'desc', completed: false, indexVal: 1 }
+      { description: 'desc', completed: false, indexVal: 1 },
     ];
     expect(clearSelected(array)).toStrictEqual(changed);
   });
