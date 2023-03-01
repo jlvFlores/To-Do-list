@@ -2,7 +2,7 @@ import { clearList, updateCompleted } from './update.js';
 
 // VARIABLES
 const listContainer = document.getElementById('list-container');
-let listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
+const listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
 let counter = 1;
 
 // UPDATE LOCAL STORAGE
@@ -21,6 +21,16 @@ export const filterListItem = (id, listArray) => {
   return listArray;
 };
 
+export const renameListItem = (index, desc, listArray) => {
+  listArray[index - 1].description = desc;
+  return listArray;
+};
+
+export const clearSelected = (listArray) => {
+  listArray = listArray.filter((item) => item.completed !== true);
+  return listArray;
+};
+
 // OBJECT UPDATES
 const updateKeys = () => {
   listArray.forEach((element) => {
@@ -33,7 +43,7 @@ const updateKeys = () => {
 };
 
 const updateDescription = (index, desc) => {
-  listArray[index].description = desc;
+  renameListItem(index, desc, listArray);
   updateLocalStorage();
 };
 
@@ -86,7 +96,7 @@ export const renderList = () => {
 export const testJest = (a, b) => a + b;
 
 export const clearCompleted = () => {
-  listArray = listArray.filter((item) => item.completed !== true);
+  clearSelected();
   clearList();
   renderList();
 };
