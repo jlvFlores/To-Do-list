@@ -83,9 +83,7 @@ export const renderList = () => {
   });
 };
 
-export const testJest = (a, b) => {
-  return a + b;
-}
+export const testJest = (a, b) => a + b;
 
 export const clearCompleted = () => {
   listArray = listArray.filter((item) => item.completed !== true);
