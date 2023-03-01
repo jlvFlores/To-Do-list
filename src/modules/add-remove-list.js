@@ -21,6 +21,11 @@ export const filterListItem = (id, listArray) => {
   return listArray;
 };
 
+export const renameListItem = (index, desc, listArray) => {
+  listArray[index].description = desc;
+  return listArray;
+};
+
 // OBJECT UPDATES
 const updateKeys = () => {
   listArray.forEach((element) => {
@@ -33,7 +38,7 @@ const updateKeys = () => {
 };
 
 const updateDescription = (index, desc) => {
-  listArray[index].description = desc;
+  renameListItem(index, desc, listArray);
   updateLocalStorage();
 };
 
