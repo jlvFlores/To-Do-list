@@ -26,6 +26,11 @@ export const renameListItem = (index, desc, listArray) => {
   return listArray;
 };
 
+export const clearSelected = (listArray) => {
+  listArray = listArray.filter((item) => item.completed !== true);
+  return listArray;
+}
+
 // OBJECT UPDATES
 const updateKeys = () => {
   listArray.forEach((element) => {
@@ -91,7 +96,7 @@ export const renderList = () => {
 export const testJest = (a, b) => a + b;
 
 export const clearCompleted = () => {
-  listArray = listArray.filter((item) => item.completed !== true);
+  clearSelected();
   clearList();
   renderList();
 };
