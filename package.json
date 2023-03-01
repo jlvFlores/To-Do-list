@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "webpack serve --open",
-    "build": "webpack"
+    "build": "webpack",
+    "fix" : "npx stylelint '**/*.{css,scss}' --fix && npx eslint . --fix && echo everything-looks-fixed"
   },
   "jest": {
     "transform": {
