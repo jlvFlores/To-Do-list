@@ -7,12 +7,13 @@ import { pushListItem, renameListItem, clearSelected } from './add-remove-list.j
 describe('Testing Crud functions', () => {
   const chore = 'laundry';
   const newChore = 'Mop';
+  const expectedResult = [{ description: newChore, completed: false, indexVal: 1 }];
   pushListItem(chore);
 
   test('edit description test', () => {
-    expect(renameListItem(1, newChore)).toStrictEqual([{ description: newChore, completed: false, indexVal: 1 }]);
+    expect(renameListItem(1, newChore)).toStrictEqual(expectedResult);
   });
   test('Clear completed', () => {
-    expect(clearSelected()).toStrictEqual([{ description: newChore, completed: false, indexVal: 1 }]);
+    expect(clearSelected()).toStrictEqual(expectedResult);
   });
 });
