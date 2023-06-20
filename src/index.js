@@ -4,15 +4,15 @@ import { renderList, addToList, clearCompleted } from './modules/add-remove-list
 renderList();
 
 // EVENT LISTENERS
-const addBtn = document.getElementById('add-button');
-addBtn.addEventListener('click', () => {
+const form = document.querySelector('form');
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
   const input = document.getElementById('add-input');
   if (input.value) {
     addToList(input.value);
-    input.value = '';
+    form.reset();
     input.focus();
   }
 });
 
-const clearBtn = document.querySelector('.clear-completed');
-clearBtn.addEventListener('click', () => clearCompleted());
+document.querySelector('.clear-completed').addEventListener('click', () => clearCompleted());

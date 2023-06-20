@@ -1,8 +1,6 @@
-import { clearList, updateCompleted } from './update.js';
-
 // VARIABLES
 const listContainer = document.getElementById('list-container');
-const listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
+let listArray = localStorage.getItem('list') ? JSON.parse(localStorage.getItem('list')) : [];
 let counter = 1;
 
 // UPDATE LOCAL STORAGE
@@ -16,17 +14,17 @@ export const pushListItem = (desc) => {
   return listArray;
 };
 
-export const filterListItem = (id, listArray) => {
+export const filterListItem = (id) => {
   listArray = listArray.filter((item) => item.indexVal !== id);
   return listArray;
 };
 
-export const renameListItem = (index, desc, listArray) => {
+export const renameListItem = (index, desc) => {
   listArray[index - 1].description = desc;
   return listArray;
 };
 
-export const clearSelected = (listArray) => {
+export const clearSelected = () => {
   listArray = listArray.filter((item) => item.completed !== true);
   return listArray;
 };
@@ -47,6 +45,10 @@ const updateDescription = (index, desc) => {
   updateLocalStorage();
 };
 
+const clearList = () => {
+  document.querySelectorAll('li').forEach((element) => element.remove());
+};
+
 // LISTENERS
 const createListeners = () => {
   const checkboxes = document.querySelectorAll('.checkbox');
@@ -55,8 +57,8 @@ const createListeners = () => {
   checkboxes.forEach((checkbox) => {
     if (checkbox.getAttribute('listener') !== true) {
       checkbox.addEventListener('change', () => {
-        const arrayindex = Number(checkbox.parentElement.id - 1);
-        listArray[arrayindex].completed = updateCompleted(checkbox);
+        const index = Number(checkbox.parentElement.id - 1);
+        listArray[index].completed = checkbox.checked;
         updateLocalStorage();
       });
     }
@@ -92,8 +94,6 @@ export const renderList = () => {
     }
   });
 };
-
-export const testJest = (a, b) => a + b;
 
 export const clearCompleted = () => {
   clearSelected();
